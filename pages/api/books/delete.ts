@@ -8,6 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Get data from your body
     const { id } = req.body;
 
+    // Initialize authorization error so we can throw it later
     const authorizationError = new UnauthorizedError({
         message: "You are not authorized to perform this action"
     });
@@ -28,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw new Error("Book not found");
         }
 
+        // Check if book belongs to seller
         if (book.book.seller?.id !== seller.id) {
             throw authorizationError;
         }

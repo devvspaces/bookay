@@ -18,10 +18,12 @@ export class BaseModel {
 
     
     db() {
+        // this let's us call db() from the class, giving access to the db
         return getXataClient().db;
     }
 
     static db() {
+        // this let's us call db() from the class, giving access to the db
         return getXataClient().db;
     }
 }

@@ -1,3 +1,5 @@
+
+
 import { FormEvent, InputHTMLAttributes, Key, SelectHTMLAttributes, TextareaHTMLAttributes, useState } from "react";
 import { capitalize, getURL, postURL, WrappedReponse, Dict } from "../src/utils";
 import { required } from "../src/validators";
@@ -76,6 +78,10 @@ type successCallbackFn = ({ event, action, data }: successCallbackArg) => void;
 type errorCallbackArg = { event: _FormEvent, errors: { [key: string]: string } };
 type errorCallbackFn = ({ event, errors }: errorCallbackArg) => void;
 
+
+/**
+ * This form class allows you to create a form with a given confiuration.
+ */
 export default class Form {
     fields: FormField[];
     prefix: string;
@@ -90,6 +96,11 @@ export default class Form {
 
     reponseCallback = (response: WrappedReponse) => { }
 
+    /**
+     * This function is called when the form is submitted.
+     * @param event The form event from the submit event.
+     * @returns
+    */
     resolveFetchResponse = (event: _FormEvent) => {
         return (response: WrappedReponse) => {
             if (response.success) {
@@ -177,11 +188,16 @@ export default class Form {
         }
     }
 
+    /**
+     * Builds state validator for the form.
+     * State validators are used to validate the form, and set the error message.
+     * Error message is a state variable, so it can be displayed in the form.
+    */
     buildStateValidator(field: FormField) {
         let { name, validators } = field;
         validators = validators || [];
         validators = [...validators, ...this.getFieldDefaultValidators(field)];
-        
+
         // ignore eslint error
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [stateValue, setValue] = useState("");
@@ -194,6 +210,10 @@ export default class Form {
         }
     }
 
+    /**
+     * Get the default validators for a field.
+     * 
+    */
     getFieldDefaultValidators(field: SelectField): Function[];
     getFieldDefaultValidators(field: FormField): Function[];
     getFieldDefaultValidators(field: SelectField) {
@@ -306,6 +326,7 @@ export default class Form {
     }
 
     render() {
+        // return form children
         return (
             <>
                 {this.generateFormGroups()}
@@ -315,10 +336,12 @@ export default class Form {
     }
 
     getFieldID(field: Field) {
+        // Used this to get a unique id for the field
         return `${this.prefix}-${field.name}`;
     }
 
     getLabels() {
+        // Get labels for the form, used to generate form groups
         return this.fields.reduce((prev, { name, label }) => {
             let new_label = label || capitalize(name);
             return {
@@ -329,12 +352,14 @@ export default class Form {
     }
 
     generateLabel(field: Field) {
+        // Generate label for the field
         return (
             <label htmlFor={this.getFieldID(field)}>{field.label || capitalize(field.name)}</label>
         );
     }
 
     showField(field: Field) {
+        // Check if the field should be shown
         const display = field.display === undefined || field.display;
         if (!display) {
             return "d-none";
@@ -342,11 +367,13 @@ export default class Form {
     }
 
     getFieldGroupClassName(field: Field) {
+        // Get the class name for the field group
         return `${this.formGroupClassName} ${this.showField(field) || ""}`;
     }
 
     generateFormGroups() {
-       return this.fields.map((field, index) => {
+        // Generate form groups for the form
+        return this.fields.map((field, index) => {
             let errorValue = this.stateValidators[field.name]?.stateValue
             return (
                 <div key={index} className={this.getFieldGroupClassName(field)}>
@@ -359,6 +386,7 @@ export default class Form {
     }
 
     getFieldByName(name: string) {
+        // Get field by name, fields are passed as values to the constructor
         const field = this.fields.find((field) => field.name === name);
         if (field === undefined) {
             throw new Error(`Field ${name} not found`);
@@ -367,11 +395,15 @@ export default class Form {
     }
 
     generateFieldByName(name: string) {
+        // Generate field by name
         const field = this.getFieldByName(name);
         return this.generateField(field);
     }
 
     generateField(field: FormField) {
+        // Generate field, by default it is a text input
+        // If the field is a select, it will generate a select input
+        // If the field is a textarea, it will generate a textarea
         if (field.type === "textarea") {
             return this.generateTextarea(field);
         } else if (field.type === "select") {

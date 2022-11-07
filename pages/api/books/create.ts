@@ -5,6 +5,12 @@ import form from "../../../src/forms/books";
 import { Book } from "../../../src/models/book";
 
 
+/**
+ * @description Create a new book and add it to the database, this is only accessible to sellers
+ * @param req NextApiRequest
+ * @param res NextApiResponse
+ * @returns 
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Get data from your body
     const data = form.cleanData(req.body);
@@ -15,15 +21,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
 
+        // Run form validation against the data
         const errors = form.validate(req.body);
         let message = "";
 
-        // Validate data
+        // Check if there are any errors
         if (Object.keys(errors).length > 0) {
             message = "All fields are required";
             throw new ValidationError(errors, message);
         }
-
 
         // Validate if user is logged in and is a seller
         const seller = await getSeller(req, res);

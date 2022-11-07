@@ -31,8 +31,6 @@ export class Book extends BaseModel {
 
     book: BookT;
 
-    // NOTE: Connect seller object to book object
-
     constructor(book: BookT) {
         super();
         this.book = book;
@@ -44,6 +42,12 @@ export class Book extends BaseModel {
         return new Book(xata_book);
     }
 
+    /**
+     * Search for books
+     * @param query search query to search through books,
+     * this will search through all available columns in books table
+     * @returns serialized books
+     */
     static async search(query: string) {
         const xata = getXataClient();
         const xata_books = await xata.search.all(query, {

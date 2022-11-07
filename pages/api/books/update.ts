@@ -15,10 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
 
+        // Run form validation against the data
         const errors = form.validate(req.body);
         let message = "";
 
-        // Validate data
+        // Check if there are any errors
         if (Object.keys(errors).length > 0) {
             message = "All fields are required";
             throw new ValidationError(errors, message);
@@ -31,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw authorizationError;
         }
 
+        // Get the book id from the request query
         const { id } = req.query;
         const book = await Book.get(id as string)
 
