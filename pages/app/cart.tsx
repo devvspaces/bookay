@@ -1,13 +1,16 @@
 import { GetServerSidePropsContext } from "next";
+import Link from "next/link";
 import CartItems from "../../components/cart/items";
+import NoResult from "../../components/no-result";
 import { getUser } from "../../src/filebased";
-import { BookSerialized } from "../../src/models/book";
+import { _CartItem } from "../../src/models/book";
 import { User } from "../../src/models/user";
+import { fetchBuilder, humanizeNumber } from "../../src/utils";
 import styles from "../../styles/cart.module.css";
 
-export default function Cart({ books }: { books: BookSerialized[] }) {
+export default function Cart({ items }: { items: _CartItem[] }) {
 
-    console.log(books)
+    const total = humanizeNumber(items.reduce((acc, { book }) => acc + (book.price || 0), 0));
 
     return (
         <div>
@@ -16,13 +19,38 @@ export default function Cart({ books }: { books: BookSerialized[] }) {
                 <h1>My Cart</h1>
 
                 <div className={styles.cartHeadBtns}>
-                    <a href="" className="btn btn-primary">Checkout Cart (₦ 2,000) </a>
-                    <a href="" className="btn btn-danger">Clear Cart</a>
+                    {
+                        items.length > 0 ?
+                            <>
+                                <Link href="/app/checkout" className="btn btn-primary">Checkout Cart (₦ {total}) </Link>
+                                <a href="" className="btn btn-danger" onClick={
+                                    (e) => {
+                                        e.preventDefault()
+
+                                        fetchBuilder({
+                                            url: "/cart/clear",
+                                            method: "delete",
+                                            success: () => {
+                                                alert("Cart cleared successfully");
+                                                window.location.reload();
+                                            },
+                                        });
+                                        
+                                    }
+                                }>Clear Cart</a>
+                            </>
+                            : null
+                    }
                 </div>
 
             </div>
 
-            <CartItems items={books} />
+            {
+                items.length > 0 ?
+                    <CartItems items={items} />
+                    :
+                    <NoResult text={"No items in Cart"} textStyles={{ fontSize: "3rem" }} />
+            }
 
         </div>
     );
@@ -41,11 +69,11 @@ export const getServerSideProps = async ({ req, res, query }: GetServerSideProps
         }
     }
 
-    const books = await User.serializedUserCart(user?.user?.username as string)
+    const items = await User.serializedUserCart(user?.user?.username as string)
 
     return {
         props: {
-            books
+            items
         }
     }
 

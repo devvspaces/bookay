@@ -1,5 +1,5 @@
-import { getCookie } from "cookies-next";
 import Form from "../../components/form";
+import { getNextUrl } from "../auth";
 import { WrappedReponse } from "../utils";
 
 
@@ -18,16 +18,18 @@ export default new Form({
     submitText: "Login",
     reponseCallback: ({ data }: WrappedReponse) => {
 
-        const nextUrl = getCookie("next");
+        const nextUrl = getNextUrl();
 
         if (nextUrl){
-            window.location.href = nextUrl.toString();
+            window.location.href = nextUrl;
+            return;
         }
 
         if (data.isSeller) {
             window.location.href = "/shop/dashboard"
             return;
         }
+    
         window.location.href = "/";
     }
 });

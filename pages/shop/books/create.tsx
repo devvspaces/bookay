@@ -1,7 +1,8 @@
-import Head from "next/head";
 import form from "../../../src/forms/books";
 import ImageWidget from "../../../components/upload-widget";
 import styles from "./books.module.css";
+import { bookSubmitEvent } from "../../../src/book-event";
+import { CloudinaryHead } from "../../../components/cloudinary";
 
 
 export default function Books() {
@@ -14,30 +15,12 @@ export default function Books() {
     return (
         <div>
 
-            <Head>
-                <script
-                    src="https://widget.Cloudinary.com/v2.0/global/all.js"
-                    type="text/javascript"
-                ></script>
-            </Head>
+            <CloudinaryHead />
 
 
             <h1 className={styles.head}>Add New Book</h1>
 
-            <form className={styles.bookInfo} onSubmit={(e) => {
-                e.preventDefault();
-                
-                // Get src from image widget
-                const imagePublicID = document.querySelector("img")?.getAttribute("data-public-id");
-                
-                // Set image input field value
-                const target = e.target as HTMLFormElement;
-                const imageInput = target.querySelector("input[name='image']") as HTMLInputElement;
-                imageInput.value = imagePublicID || "";
-
-                form.handleSubmit(e);
-
-            }} action={form.buildUrl("/books/create")}>
+            <form className={styles.bookInfo} onSubmit={bookSubmitEvent(form)} action={form.buildUrl("/books/create")}>
 
                 <ImageWidget error={imageError} />
 

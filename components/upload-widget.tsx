@@ -4,8 +4,8 @@ import styles from "../pages/shop/books/books.module.css";
 export const cloudName = "dsnipmmnj";
 const uploadPreset = "cpddktgo";
 
-const ImageWidget = ({ error }: {error: string}) => {
-    const [preview, setPreview] = useState("");
+const ImageWidget = ({ error, defaultImage = "/images/add-image.png" }: { error: string, defaultImage?: string }) => {
+    const [preview, setPreview] = useState(defaultImage);
     const [imageId, setImageID] = useState("");
 
     const openWidget = (e: any) => {
@@ -31,9 +31,9 @@ const ImageWidget = ({ error }: {error: string}) => {
 
     return (
         <div className={styles.bookImage}>
-            <img src={preview ? preview : "/images/add-image.png"} data-public-id={imageId} alt="" />
+            <img src={preview} data-public-id={imageId} alt="" />
             <button onClick={openWidget} className="btn btn-sm btn-outline-primary">Upload Image</button>
-            { error && <p className="form-error text-center">{error}</p> }
+            {error && <p className="form-error text-center">{error}</p>}
         </div>
     );
 }

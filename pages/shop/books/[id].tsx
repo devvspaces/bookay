@@ -1,10 +1,12 @@
 import { GetServerSidePropsContext } from "next";
 import { Cloudinary } from "@cloudinary/url-gen";
 import TransformImage from "../../../components/image";
-import { getSeller } from "../../../src/filebased";
-import { Book, BookSerialized } from "../../../src/models/book";
+import { reuseServerSideProps } from "../../../src/filebased";
+import { BookSerialized } from "../../../src/models/book";
 import styles from "./books.module.css";
 import { cloudName } from "../../../components/upload-widget";
+import { fetchBuilder, humanizeNumber } from "../../../src/utils";
+import Link from "next/link";
 
 export default function Books({ book }: { book: BookSerialized }) {
 
@@ -23,7 +25,7 @@ export default function Books({ book }: { book: BookSerialized }) {
             <div className={styles.bookInfo}>
 
                 <div className={styles.bookImage}>
-                    <TransformImage publicId={book.image as string} cld={cld} />
+                    <TransformImage publicId={book.image as string} cld={cld} height={500} width={300} radius={10} />
                 </div>
 
                 <div className={styles.bookDetails}>
@@ -49,15 +51,33 @@ export default function Books({ book }: { book: BookSerialized }) {
 
                     <div>
                         <h5>Price</h5>
-                        <p>{book.price}</p>
+                        <p>₦ {humanizeNumber(book.price || 0)}</p>
                     </div>
 
                     <div className={styles.btns}>
 
                         <a href="" className="btn btn-secondary disabled">View Orders</a>
-                        <a href="" className="btn btn-info">Preview</a>
-                        <a href="" className="btn btn-primary">Edit</a>
-                        <a href="" className="btn btn-outline-danger">Delete</a>
+                        
+                        <Link href={`/books/${book.id}`} className="btn btn-info">Preview</Link>
+                        <Link href={`/shop/books/update/${book.id}`} className="btn btn-primary">Edit</Link>
+                        
+                        <button
+
+                            onClick={(e) => {
+                                fetchBuilder({
+                                    url: "/books/delete",
+                                    data: {
+                                        id: book.id,
+                                    },
+                                    method: "delete",
+                                    success: () => {
+                                        alert(`${book.title} deleted successfully`);
+                                        window.location.href = "/shop/books";
+                                    },
+                                })
+                            }}
+
+                            className="btn btn-outline-danger">Delete</button>
 
                     </div>
 
@@ -69,49 +89,6 @@ export default function Books({ book }: { book: BookSerialized }) {
 }
 
 
-
-export const getServerSideProps = async ({ req, res, query }: GetServerSidePropsContext) => {
-
-    // Get the seller
-    const seller = await getSeller(req, res);
-
-    const exit = {
-        redirect: {
-            destination: "/login",
-            permanent: false
-        }
-    }
-
-    // If the seller is not found, redirect to the login page
-    if (!seller) {
-        return exit;
-    }
-
-    // Get the book id from the url
-    const { id } = query;
-
-    // Get the book from the database
-    const book = await Book.get(id as string);
-
-    // If the book is not found, redirect to the books page
-    if (!book) {
-        return {
-            redirect: {
-                destination: "/shop/books",
-                permanent: false
-            }
-        }
-    }
-
-    // Check if seller owns the book
-    if (book.book?.seller?.id !== seller.id) {
-        return exit;
-    }
-
-    return {
-        props: {
-            book: book.serialize()
-        }
-    }
-
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+    return reuseServerSideProps(context);
 }

@@ -56,6 +56,9 @@ const tables = [
       { name: "status", type: "string" },
       { name: "rating", type: "float" },
       { name: "comment", type: "text" },
+      { name: "user", type: "link", link: { table: "users" } },
+      { name: "amount", type: "float" },
+      { name: "items", type: "int" },
     ],
   },
   {

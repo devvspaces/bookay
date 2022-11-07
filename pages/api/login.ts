@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw new ValidationError(errors, message);
         }
 
+
         // Login or create new user
         const user = await User.login(username, password);
 
@@ -25,6 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             errors["password"] = "Password is incorrect";
             throw new ValidationError(errors, message);
         }
+
+        console.log("got here")
 
         // authenticate user
         await authenticate(res, req, username);

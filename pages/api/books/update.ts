@@ -24,7 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw new ValidationError(errors, message);
         }
 
-
         // Validate if user is logged in and is a seller
         const seller = await getSeller(req, res);
 
@@ -32,10 +31,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw authorizationError;
         }
 
-        // Create book
-        const book = await Book.create(data, seller)
+        const { id } = req.query;
+        const book = await Book.get(id as string)
 
-        res.status(201).json({ message: "Book created successfully", data: book.serialize() });
+        if (!book.book) {
+            throw new Error("Book not found");
+        }
+
+        if (book.book.seller?.id !== seller.id) {
+            throw authorizationError;
+        }
+
+        // Update book
+        const updated_book = await book.update(data);
+
+        res.status(200).json({ message: "Book updated successfully", data: updated_book.serialize() });
 
     } catch (e){
         return ErrorResponse(e, res, form.getLabels());

@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import BookItem from "../components/book_item";
+import NoResult from "../components/no-result";
 import { Book, BookSerialized } from "../src/models/book";
 import styles from "../styles/search.module.css";
 
@@ -20,19 +21,11 @@ export default function Search({ books }: { books: BookSerialized[] }) {
             <div className={styles.books}>
 
                 {
-                    books.map((book) => (
-                        <BookItem book={book} />
+                    books.map((book, index) => (
+                        <BookItem key={index} book={book} />
                     ))
                 }
 
-            </div>
-        )
-    }
-
-    function noResults(){
-        return (
-            <div className="noResults">
-                <h3>No results found for "{searchQuery}"</h3>
             </div>
         )
     }
@@ -49,7 +42,7 @@ export default function Search({ books }: { books: BookSerialized[] }) {
 
             <div>
 
-                { books.length > 0 ? showResults() : noResults() }
+                { books.length > 0 ? showResults() : <NoResult text={`No results found for "${searchQuery}"`} /> }
 
             </div>
         </div>

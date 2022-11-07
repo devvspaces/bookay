@@ -1,4 +1,4 @@
-import { BookSerialized } from "../../src/models/book";
+import { _CartItem } from "../../src/models/book";
 
 export type BookItem = {
     id: string;
@@ -10,5 +10,5 @@ export type BookItem = {
 };
 
 export interface Props {
-    item: BookSerialized;
+    item: _CartItem;
 }

@@ -20,7 +20,7 @@ export type WrappedReponse = { success: boolean, code: number, data: { [key: str
  */
 const wrapResponse = async (res: Response): Promise<WrappedReponse> => {
     let success = res.ok;
-    const data: Dict = res.body ? await res.json() : {};
+    const data: Dict = res.status !== 204 ? await res.json() : {};
     return { success, code: res.status, data };
 }
 
@@ -38,24 +38,33 @@ export async function postURL(url: string, data: string) {
             "Content-Type": "application/json",
         },
         body: data
-    }).then(wrapResponse);
+    }).then(wrapResponse).catch((e) => {
+        console.error(e);
+        return { success: false, code: 500, data: { message: "Error processing your request" } }
+    });
 
 }
 
 export async function _deleteURL(url: string, data: Dict) {
     const _data = JSON.stringify(data);
 
-    return await fetch("/api" + url, {
+    return await fetch(url, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
         },
         body: _data
-    }).then(wrapResponse);
+    }).then(wrapResponse)
+        .then(res => {
+            if (res.code !== 204) {
+                res.success = false;
+            }
+            return res;
+        });
 }
 
 export async function deleteURL(url: string, id: string) {
-    return await _deleteURL(url, { id });
+    return await _deleteURL("/api" + url, { id });
 }
 
 export function buildUrl(url: string, params: Dict) {
@@ -75,7 +84,7 @@ export async function _getURL(url: string, data: Dict) {
 
 export type FetchBuild = {
     url: string,
-    data: Dict,
+    data?: Dict,
     success?: ({ res }: { res: WrappedReponse }) => void,
     error?: ({ res }: { res: WrappedReponse }) => void,
     method?: "post" | "delete" | "get",
@@ -91,20 +100,21 @@ export async function fetchBuilder({ url, data, success, error, method = "post" 
 
     const fetchFunction = fetchers[method];
 
-    await fetchFunction("/api" + url, data).then((res) => {
+    await fetchFunction("/api" + url, data || {}).then((res) => {
         if (res.data.message) alert(res.data.message);
 
-        if (res.code === 401){
+        if (res.code === 401) {
             // Logout
             logout();
+            window.location.href = "/login";
         }
 
         if (res.success) {
-            if(success) success({ res });
+            if (success) success({ res });
         } else {
-            if(error) error({ res });
+            if (error) error({ res });
         }
-        
+
     });
 
 }
@@ -115,4 +125,8 @@ export const capitalize = function (value: string) {
     return value.replace(/_/g, " ").replace(/\w\S*/g, (txt) => {
         return txt.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     });
+}
+
+export const humanizeNumber = function (value: number) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

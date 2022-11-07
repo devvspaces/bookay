@@ -71,9 +71,13 @@ table{
 
 .noResults{
   text-align: center;
-  padding-top: 1rem;
+  margin-top: 7rem;
 }
 
 .noResults h3{
   font-size: 2rem;
+}
+
+p{
+  margin: 0;
 }

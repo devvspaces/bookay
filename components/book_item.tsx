@@ -4,6 +4,7 @@ import TransformImage from "./image";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { cloudName } from "./upload-widget";
 import Link from "next/link";
+import { humanizeNumber } from "../src/utils";
 
 export default function BookItem({ book }: { book: BookSerialized }) {
 
@@ -35,7 +36,7 @@ export default function BookItem({ book }: { book: BookSerialized }) {
 
                     <div>
                         <h5>Price</h5>
-                        <p>₦ {book.price}</p>
+                        <p>₦ {humanizeNumber(book.price || 0)}</p>
                     </div>
 
                     <div>

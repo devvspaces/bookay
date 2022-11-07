@@ -43,20 +43,21 @@
     margin-bottom: 2rem;
 }
 
-.form fieldset{
+.form > div{
     width: 100%;
+    margin-bottom: 1.5rem;
 }
 
-.form fieldset label{
+.form > div label{
     display: block;
-    margin-bottom: 1.5rem;
+    margin-bottom: .5rem;
     font-size: .9rem;
     font-weight: 600;
 }
 
-.form fieldset input,
-.form fieldset select,
-.form fieldset textarea{
+.form > div input,
+.form > div select,
+.form > div textarea{
     width: 100%;
     margin-top: .5rem;
     padding-top: 10px;
@@ -65,4 +66,5 @@
 
 .form button{
     border-radius: 10px;
+    margin-top: 2rem;
 }

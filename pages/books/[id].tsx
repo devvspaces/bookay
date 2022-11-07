@@ -5,9 +5,10 @@ import { SellerSerialized } from "../../src/models/seller";
 import { Cloudinary } from "@cloudinary/url-gen";
 import styles from "../../styles/book.module.css";
 import TransformImage from "../../components/image";
-import { isLoggedIn } from "../../src/auth";
+import { getLoginNextUrl, getNextUrl, isLoggedIn } from "../../src/auth";
 import { setCookie } from "cookies-next";
-import { fetchBuilder } from "../../src/utils";
+import { fetchBuilder, humanizeNumber } from "../../src/utils";
+import { useEffect } from "react";
 
 
 type SellerBook = {
@@ -27,13 +28,12 @@ export default function SingleBook({ book }: Props) {
         }
     });
 
-
     return (
 
         <div className={styles.bookMain}>
 
             <div className={styles.bookCover}>
-                <TransformImage radius={100} cld={cld} publicId={book.image as string} />
+                <TransformImage radius={10} cld={cld} publicId={book.image as string} height={400} width={300} />
             </div>
 
             <div className={styles.bookOverview}>
@@ -54,13 +54,8 @@ export default function SingleBook({ book }: Props) {
                         </div>
 
                         <div>
-                            <h4>Rating</h4>
-                            <p>4.5</p>
-                        </div>
-
-                        <div>
                             <h4>Price</h4>
-                            <p>₦ {book.price}</p>
+                            <p>₦ {humanizeNumber(book.price || 0)}</p>
                         </div>
 
                         <div>
@@ -86,23 +81,21 @@ export default function SingleBook({ book }: Props) {
                     <button onClick={
                         () => {
                             if (!isLoggedIn()){
-                                setCookie("next", window.location.pathname)
-                                window.location.href = "/login"
+                                window.location.href = getLoginNextUrl()
+                                return;
                             }
 
                             const data = {
                                 bookId: book.id,
                             }
 
-                            console.log(data)
-
                             fetchBuilder({
-                                url: "/books/add-to-cart",
+                                url: "/cart/add",
                                 data,
                             })
                         }
                     } >Save to Cart</button>
-                    <button>Order</button>
+                    {/* <button>Order</button> */}
                 </div>
 
             </div>

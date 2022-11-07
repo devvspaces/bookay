@@ -66,7 +66,7 @@ type FormDataValues = {
     [key: string]: FormDataEntryValue,
 }
 
-type _FormEvent = FormEvent<HTMLFormElement>;
+export type _FormEvent = FormEvent<HTMLFormElement>;
 
 type reponseCallbackFn = (response: WrappedReponse) => void;
 
@@ -110,7 +110,6 @@ export default class Form {
     }
 
     successCallback({ event, action, data }: successCallbackArg) {
-        console.log(action, this.method)
         if (this.method?.toLowerCase() === "post") {
             // Make post request
             const json_data = JSON.stringify(Object.fromEntries(data));
@@ -124,7 +123,6 @@ export default class Form {
     errorCallback({ errors }: errorCallbackArg) {
         // Set errors
         Object.entries(errors).forEach(([name, error]) => {
-            console.log(this.stateValidators[name], name);
             this.stateValidators[name].setValue(error);
         });
     };
@@ -342,7 +340,7 @@ export default class Form {
     }
 
     getFieldGroupClassName(field: Field) {
-        return `${this.formGroupClassName} ${this.showField(field)}`;
+        return `${this.formGroupClassName} ${this.showField(field) || ""}`;
     }
 
     generateFormGroups() {
@@ -356,6 +354,19 @@ export default class Form {
                 </div>
             );
         })
+    }
+
+    getFieldByName(name: string) {
+        const field = this.fields.find((field) => field.name === name);
+        if (field === undefined) {
+            throw new Error(`Field ${name} not found`);
+        }
+        return field;
+    }
+
+    generateFieldByName(name: string) {
+        const field = this.getFieldByName(name);
+        return this.generateField(field);
     }
 
     generateField(field: FormField) {

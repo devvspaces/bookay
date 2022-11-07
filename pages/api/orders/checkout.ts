@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ErrorResponse, ValidationError, UnauthorizedError } from "../../../src/error";
-import { getSeller } from "../../../src/filebased";
-import form from "../../../src/forms/books";
-import { Book } from "../../../src/models/book";
+import { getUser } from "../../../src/filebased";
+import form from "../../../src/forms/checkout";
+import { Order } from "../../../src/models/order";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -25,17 +25,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
 
-        // Validate if user is logged in and is a seller
-        const seller = await getSeller(req, res);
+        // Validate if user is logged in
+        const user = await getUser(req, res);
 
-        if (!seller) {
+        if (!user?.user) {
             throw authorizationError;
         }
 
-        // Create book
-        const book = await Book.create(data, seller)
+        // Create order
+        const order = await Order.checkout(data, user);
 
-        res.status(201).json({ message: "Book created successfully", data: book.serialize() });
+        res.status(201).json({ message: "Order created successfully", data: order.serialize() });
 
     } catch (e){
         return ErrorResponse(e, res, form.getLabels());

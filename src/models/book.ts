@@ -7,6 +7,12 @@ import { Seller } from "./seller";
 
 type BookT = Readonly<SelectedPick<BooksRecord, ["*"]>> | null;
 
+
+export type _CartItem = {
+    id: string;
+    book: BookSerialized;
+}
+
 export type BookSerialized = {
     id: string;
     title: string | null | undefined;
@@ -17,6 +23,7 @@ export type BookSerialized = {
     added: string | null | undefined;
     updated: string | null | undefined;
     image: string | null | undefined;
+    [key: string]: any;
 }
     
 
@@ -56,11 +63,9 @@ export class Book extends BaseModel {
         await this.db().cart.create({ book: bookId, user: userId })
     }
 
-    static async update(id: string, bookData: {}) {
-        const xata_book = await this.db().books.filter({ id }).getFirst();
-        if (!xata_book) throw new Error("Book not found");
-
-        const updated_book = await xata_book.update({ ...bookData, updated: new Date() });
+    async update( bookData: {}) {
+        if (!this.book) throw new Error("Book not found");
+        const updated_book = await this.book.update({ ...bookData, updated: new Date() });
         return new Book(updated_book);
     }
 
@@ -103,13 +108,12 @@ export class Book extends BaseModel {
     }
 
     static async getSellerBooks(seller_id: string) {
-        const xata_books = await this.db().books.filter({ seller: seller_id }).getAll();
+        const xata_books = await this.db().books.filter({ seller: seller_id }).sort("added", "desc").getAll();
         return xata_books.map(book => new Book(book).serialize());
     }
 
     static async create(bookData: {}, seller: Seller) {
-        if (!seller) throw new Error("Seller not found");
-        if (!seller.profile) throw new Error("Seller profile not found");
+        if (!seller.profile) throw new Error("Seller not found");
 
         const added = new Date();
         const updated = added;

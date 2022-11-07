@@ -1,7 +1,8 @@
-import { Props } from "./types";
+import { BookSerialized } from "../../src/models/book";
+import { humanizeNumber } from "../../src/utils";
 
 
-export const ItemText = ({ item }: Props) => {
+export const ItemText = ({ item }: { item: BookSerialized }) => {
     return (
         <>
             <div>
@@ -21,7 +22,7 @@ export const ItemText = ({ item }: Props) => {
 
             <div>
                 <h5>Price</h5>
-                <p>₦ {item.price}</p>
+                <p>₦ {humanizeNumber(item.price || 0)}</p>
             </div>
         </>
     );

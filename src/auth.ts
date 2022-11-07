@@ -20,6 +20,33 @@ export function getLoggedInUsername({ req, res }: { req?: IncomingMessage, res?:
     return getCookie('username', { req, res });
 }
 
+export function getNextUrl() {
+
+    // Get base url from window
+    const baseUrl = window.location.origin;
+
+    // Get next url from window
+    const path = window.location.pathname + window.location.search;
+
+    const url = new URL(path, baseUrl);
+    const nextUrl = url.searchParams.get('next');
+
+    if (!nextUrl) return "";
+
+    // Check if nextUrl is a valid path
+    const validStarts = ['/app', '/shop', '/books']
+    for (const start of validStarts) {
+        if (nextUrl.startsWith(start)) return nextUrl;
+    }
+    
+    return "";
+}
+
+
+export function getLoginNextUrl() {
+    const url = window.location.pathname;
+    return "/login?next=" + url;
+}
 
 
 export function isLoggedIn(){

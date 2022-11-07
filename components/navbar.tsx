@@ -28,7 +28,7 @@ export default function Navbar() {
         const currentPage = document.querySelector(`.nav-link[href='${path}']`);
         currentPage?.classList.add("active");
 
-    }, [router]);
+    }, [router.query]);
 
 
     return (
@@ -55,7 +55,7 @@ export default function Navbar() {
                                                     <Link className="nav-link" href="/shop/dashboard">Dashboard</Link>
                                                 </li>
                                                 <li className="nav-item">
-                                                    <Link className="nav-link" href="/shop/orders">Orders</Link>
+                                                    <Link className="nav-link" href="/shop/orders">Store Orders</Link>
                                                 </li>
                                                 <li className="nav-item">
                                                     <Link className="nav-link" href="/shop/books">Books</Link>
@@ -66,6 +66,10 @@ export default function Navbar() {
                                             </>
                                         )
                                     }
+
+                                    <li className="nav-item">
+                                        <Link className="nav-link" href="/app/orders">Orders</Link>
+                                    </li>
 
                                     <li className="nav-item">
                                         <Link className="nav-link" href="/app/cart">Cart</Link>
@@ -80,7 +84,11 @@ export default function Navbar() {
                                 <>
 
                                     <li className="nav-item">
-                                        <Link href="/login" className="nav-link">Login</Link>
+                                        <Link href="/login" className="nav-link">Login / Register</Link>
+                                    </li>
+
+                                    <li className="nav-item">
+                                        <Link href="/signup" className="nav-link">Register Store</Link>
                                     </li>
 
                                 </>

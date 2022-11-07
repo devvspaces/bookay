@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { getSeller } from "../../../src/filebased";
 import { Book, BookSerialized } from "../../../src/models/book";
-import { deleteURL } from "../../../src/utils";
+import { deleteURL, fetchBuilder, humanizeNumber } from "../../../src/utils";
 import styles from "./books.module.css";
 
 export default function Books(data: { books: BookSerialized[] }) {
@@ -33,21 +33,25 @@ export default function Books(data: { books: BookSerialized[] }) {
                                 <td>{book.isbn}</td>
                                 <td>{book.quantity}</td>
                                 <td>{book.added}</td>
-                                <td>₦ {book.price}</td>
+                                <td>₦ {humanizeNumber(book.price || 0)}</td>
                                 <td className={styles.bookAction}>
                                     <Link href={`/shop/books/${book.id}`} className="btn btn-sm btn-primary">View</Link>
-                                    <button className="btn btn-sm btn-outline-primary">
+                                    <Link href={`/shop/books/update/${book.id}`} className="ms-3 btn btn-sm btn-outline-primary">
                                         Edit
-                                    </button>
+                                    </Link>
                                     <button
                                         onClick={(e) => {
-                                            deleteURL("/books/delete", book.id).then((res) => {
-                                                if (res.code === 204) {
-                                                    alert(`Book ${book.title} deleted successfully`);
+                                            fetchBuilder({
+                                                url: "/books/delete",
+                                                data: {
+                                                    id: book.id,
+                                                },
+                                                method: "delete",
+                                                success: () => {
+                                                    alert(`${book.title} deleted successfully`);
                                                     window.location.reload();
-                                                }
-                                                if (res.data.message) alert(res.data.message);
-                                            });
+                                                },
+                                            })
                                         }}
                                         className="btn btn-sm btn-outline-danger"
                                     >
@@ -95,11 +99,7 @@ export const getServerSideProps = async ({
         },
     };
 
-    if (seller === null || seller === undefined) {
-        return exit;
-    }
-
-    if (!seller.profile) {
+    if (!seller || !seller.profile) {
         return exit;
     }
 

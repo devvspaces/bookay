@@ -15,7 +15,7 @@ export const ItemImage = ({ item }: Props) => {
 
     return (
         <div className={styles.cartItemImage}>
-            <TransformImage radius={10} cld={cld} height={400} width={300} publicId={item.image as string} />
+            <TransformImage radius={10} cld={cld} height={400} width={300} publicId={item.book.image as string} />
         </div>
     );
 }

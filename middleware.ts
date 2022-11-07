@@ -1,7 +1,6 @@
 // middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-// import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next';
 
 export function middleware(request: NextRequest) {
 
@@ -13,12 +12,10 @@ export function middleware(request: NextRequest) {
     }
 
     if (request.nextUrl.pathname.startsWith("/shop")) {
-
         // Check if logged in user is seller
         if (!request.cookies.get("isSeller")?.value) {
             return loginUrl;
         }
-
     }
 
 }
