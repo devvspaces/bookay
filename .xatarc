@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://ayanwola-ayomide-s-workspace-ravucl.eu-west-1.xata.sh/db/books-db",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}

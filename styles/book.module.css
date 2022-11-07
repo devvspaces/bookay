@@ -1,0 +1,61 @@
+.bookMain{
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+}
+
+
+.bookContent h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+
+.bookInfo{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.bookOverview {
+    width: 100%;
+    max-width: 500px;
+    margin: 2rem 0;
+}
+
+.bookInfo > div{
+    margin: .5rem 0;
+    min-width: 50%;
+}
+
+.bookInfo > div h4{
+    font-size: .9rem;
+    font-weight: 600;
+}
+.bookInfo > div p{
+    font-size: 1.2rem;
+}
+
+
+.bookBtns {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem 0;
+}
+
+
+.bookCover {
+    width: 450px;
+    margin: 2rem 0;
+    margin-left: 4rem;
+}
+
+.bookCover img{
+    width: 100%;
+}

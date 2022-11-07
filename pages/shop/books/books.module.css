@@ -1,0 +1,78 @@
+
+.bookAction button {
+    margin-left: 1rem;
+}
+
+.row td,
+.row th{
+    vertical-align: middle;
+    padding: 15px initial;
+}
+
+.bookInfo{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.bookForm {
+    flex: 1;
+}
+
+.bookForm input {
+    width: 100%;
+}
+
+.bookImage{
+    width: 100%;
+    max-width: 300px;
+    margin-right: 2rem;
+    overflow: hidden;
+    background-color: white;
+}
+.bookImage img{
+    width: 100%;
+}
+
+
+.bookDetails{
+    padding-top: 1rem;
+}
+
+.bookDetails > div {
+
+    margin-bottom: 1.5rem;
+
+}
+
+.bookDetails > div > h5 {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.bookDetails > div > p{
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.btns{
+    display: flex;
+    align-items: center;
+    margin-top: 4rem;
+    flex-wrap: wrap;
+}
+
+.btns a{
+    margin-right: 1rem;
+}
+
+.saveBtn{
+    margin-top: 2rem;
+    border-radius: 5px;
+}
+
+
+.bookImage button{
+    margin: 1rem auto;
+    display: block;
+}

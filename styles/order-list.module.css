@@ -1,0 +1,9 @@
+.head{
+    margin-bottom: 2rem;
+}
+
+.row td,
+.row th{
+    vertical-align: middle;
+    padding: 15px initial;
+}

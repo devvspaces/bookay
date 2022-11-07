@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -15,7 +17,21 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+input {
+  padding: 10px 15px;
+}
+
+button {
+  border-radius: 10px;
+}
+
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
@@ -23,4 +39,41 @@ a {
     color: white;
     background: black;
   }
+} */
+
+.tableContainer{
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+table{
+  border: none;
+}
+
+.topHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.topHeader h1{
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-error{
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.noResults{
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.noResults h3{
+  font-size: 2rem;
 }
