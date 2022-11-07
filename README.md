@@ -8,15 +8,15 @@
 
 [![Hackathon](https://img.shields.io/badge/hackathon-name-orange.svg)](http://hackathon.url.com)
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/devvspaces/The-Documentation-Compendium.svg)](https://github.com/devvspaces/The-Documentation-Compendium/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/devvspaces/The-Documentation-Compendium.svg)](https://github.com/devvspaces/The-Documentation-Compendium/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 </div>
 
 ---
 
-<p align="center"> 100% Jamstack Product, Trade with Bookay today
+<p align="center"> 100% Jamstack Product, Trade your books with Bookay today!
     <br> 
 </p>
 
@@ -35,89 +35,85 @@
 
 ## 🧐 Problem Statement <a name = "problem_statement"></a>
 
-It is useful to design and follow a specific format when writing a problem statement. While there are several options
-for doing this, the following is a simple and straightforward template often used in Business Analysis to maintain
-focus on defining the problem.
-
-- IDEAL: This section is used to describe the desired or “to be” state of the process or product. At large, this section
-  should illustrate what the expected environment would look like once the solution is implemented.
-- REALITY: This section is used to describe the current or “as is” state of the process or product.
-- CONSEQUENCES: This section is used to describe the impacts on the business if the problem is not fixed or improved upon.
-  This includes costs associated with loss of money, time, productivity, competitive advantage, and so forth.
-
-Following this format will result in a workable document that can be used to understand the problem and elicit
-requirements that will lead to a winning solution.
+The problem is that there is no online platform to buy books in Nigeria. The stress of getting books from outside the country is too much.
 
 ## 💡 Idea / Solution <a name = "idea"></a>
 
-This section is used to describe potential solutions.
+Bookay is a platform for techies in Nigeria to buy technical books and sell used ones. It's an online bookshop. Store owners can sell their books on the platform. Any one is able to sell their books on the platform. You can also buy books from the platform. With Bookay, you can buy books from the comfort of your home. You can also sell your books and make money.
 
-Once the ideal, reality, and consequences sections have been
-completed, and understood, it becomes easier to provide a solution for solving the problem.
+Using Xata full text search api, Bookay can help you find the book you want to buy. You can also search for books by title, author, publisher, ISBN, etc. all in one place, a single search box.
+
+It's a 100% Jamstack product. It's built it NextJs. 
 
 ## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
 
-- What are the dependencies of your project?
-- Describe each limitation in detailed but concise terms
-- Explain why each limitation exists
-- Provide the reasons why each limitation could not be overcome using the method(s) chosen to acquire.
-- Assess the impact of each limitation in relation to the overall findings and conclusions of your project, and if
-  appropriate, describe how these limitations could point to the need for further research.
+- Xata: full text search api to search for books & Database.
+- Cloudinary: for image storage, delivery and transformation.
+
+Limitation: No payment system is added yet. This hackathon gave me the opportunity to build a product from scratch. It was a great experience. I learnt a lot. I will add a payment system to the product in the future.
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
-Write about what you could not develop during the course of the Hackathon; and about what your project can achieve
-in the future.
+- Add a payment system.
+- Add an pre-order system. So that users can pre-order books that are not yet available.
+- Add a rating and review system. So that users can rate and review books sellers.
+- Securing app with a better authentication system like NextAuth.
+- Add a chat system so that users can chat with sellers.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
 These instructions will get you a copy of the project up and running on your local machine for development
 and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
+```bash
+git clone https://github.com/devvspaces/bookay
+cd bookay
+```
+
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+Node v12.18.3 or higher, npm v6.14.6 or higher.
 
-```
-Give examples
-```
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
+Make sure you are in the project root directory.
 
-```
-Give the example
-```
 
-And repeat
+Install project dependencies
 
-```
-until finished
+```bash
+npm install
 ```
 
-## 🎈 Usage <a name="usage"></a>
+Start the development server
 
-Add notes about how to use the system.
+```bash
+npm run dev
+```
+
+
+## 🎈 Usage and Tutorial on Building this Project <a name="usage"></a>
+
+<!-- Add link to content on Hash -->
 
 ## ⛏️ Built With <a name = "tech_stack"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Xata](https://xata.io/docs/overview) - Data storage and full text search api
+- [Cloudinary](https://cloudinary.com/documentation/) - Image storage, delivery and transformation
+- [NextJs](https://nextjs.org/) - Code framework
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors)
-who participated in this project.
+- [@devvspaces](https://github.com/devvspaces) - Idea & Initial work
 
 ## 🎉 Acknowledgments <a name = "acknowledgments"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
+- Much thanks to [Xata](https://xata.io/docs/overview) for providing a database and full text search api.
+- Much thanks to [Cloudinary](https://cloudinary.com/documentation/) for providing a free image storage, delivery and transformation service.
+- Inspiration: Hackmamba Hackathon
 - References
+
+The development of this product would not have been possible without Xata and Cloudinary. I am very grateful to them for providing thes services to developers. The development experience is amazing. I am also grateful to Hackmamba for organizing the hackathon. I learnt a lot from the hackathon. I started learning NextJS when I started working on this project. I am very grateful to the organizers of the hackathon for giving me the opportunity to build a product from scratch.
