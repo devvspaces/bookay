@@ -181,7 +181,9 @@ export default class Form {
         let { name, validators } = field;
         validators = validators || [];
         validators = [...validators, ...this.getFieldDefaultValidators(field)];
-
+        
+        // ignore eslint error
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [stateValue, setValue] = useState("");
 
         return {

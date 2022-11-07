@@ -1,12 +1,11 @@
 import Head from "next/head";
+import Script from "next/script";
 
 export const CloudinaryHead = () => {
     return (
-        <Head>
-            <script
-                src="https://widget.Cloudinary.com/v2.0/global/all.js"
-                type="text/javascript"
-            ></script>
-        </Head>
+        <Script
+            src="https://widget.Cloudinary.com/v2.0/global/all.js"
+            type="text/javascript"
+        />
     );
 }

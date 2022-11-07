@@ -84,7 +84,7 @@ export default function OrderView({ order: { id, order, book } }: Props) {
 
                 <div className={orderStyles.summary}>
 
-                    <h2>Buyer's Info</h2>
+                    <h2>{"Buyer's Info"}</h2>
 
                     <div className={styles.orderSummary}>
                         <div className={orderStyles.flexed}>

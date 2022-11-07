@@ -39,7 +39,7 @@ export default function Books({ book }: { book: BookSerialized }) {
                 }
             }
         });
-    }, []);
+    }, [book]);
 
     form.submitText = "Update";
 

@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getSeller } from "../../src/filebased";
 import { Seller } from "../../src/models/seller";
@@ -20,7 +21,7 @@ export default function Dashboard({ seller }: Props) {
             <div className={styles.storeInfo}>
 
                 <div className={styles.storeImage}>
-                    <img src="/images/profile.jpg" alt="" />
+                    <Image src="/images/profile.jpg" alt="" />
                 </div>
 
                 <div className={styles.storeDetails}>

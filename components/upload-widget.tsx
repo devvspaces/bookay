@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import styles from "../pages/shop/books/books.module.css";
 
@@ -31,7 +32,7 @@ const ImageWidget = ({ error, defaultImage = "/images/add-image.png" }: { error:
 
     return (
         <div className={styles.bookImage}>
-            <img src={preview} data-public-id={imageId} alt="" />
+            <Image src={preview} data-public-id={imageId} alt="" />
             <button onClick={openWidget} className="btn btn-sm btn-outline-primary">Upload Image</button>
             {error && <p className="form-error text-center">{error}</p>}
         </div>

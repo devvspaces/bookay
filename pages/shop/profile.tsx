@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./books/books.module.css";
 
 export default function Books() {
@@ -18,7 +19,7 @@ export default function Books() {
             <form className={styles.bookInfo} method="POST">
 
                 <div className={styles.bookImage}>
-                    <img src={profile.image} alt={profile.storeName} />
+                    <Image src={profile.image} alt={profile.storeName} />
 
                     <button className="btn btn-sm btn-outline-primary">Upload Image</button>
                 </div>

@@ -64,12 +64,12 @@ export default function SingleBook({ book }: Props) {
                         </div>
 
                         <div>
-                            <h4>Shop's Phone</h4>
+                            <h4>{"Shop's Phone"}</h4>
                             <p>{book.seller.phone}</p>
                         </div>
 
                         <div>
-                            <h4>Shop's Address</h4>
+                            <h4>{"Shop's Address"}</h4>
                             <p>{book.seller.address}</p>
                         </div>
 
