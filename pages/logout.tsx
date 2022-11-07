@@ -1,13 +1,10 @@
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { logout } from "../src/auth";
 
 export default function Logout(){
     logout();
     
-    // Redirect to the home page using nextjs router
-    // https://nextjs.org/docs/api-reference/next/router
-    const router = useRouter();
-    router.push("/");
-
-    return null;
+    useEffect(() => {
+        window.location.href = "/";
+    }, []);
 }
